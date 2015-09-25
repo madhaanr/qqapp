@@ -1,7 +1,18 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+"use strict";
 
-
+function MyApp() {
+    var version="v1.0";
+    
+    function setStatus(message) {
+        $("#app>footer").text(message);
+    }
+    
+    this.start = function() {
+        $("#app>header").append(version);
+        setStatus("ready");
+    };
+}
+$(function() {
+    window.app = new MyApp();
+    window.app.start();
+});
