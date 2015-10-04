@@ -1,7 +1,8 @@
 "use strict";
 
 function MyApp() {
-    var version="v1.2";
+    var version="v1.3",
+        appStorage=new AppStorage("taskAtHand");
     
     function setStatus(message) {
         $("#app>footer").text(message);
@@ -11,6 +12,7 @@ function MyApp() {
         var taskName=$("#new-task-name").val();
         if(taskName) {
             addTaskElement(taskName);
+            saveTaskList();
             $("#new-task-name").val("").focus();
         }
     }
@@ -22,13 +24,13 @@ function MyApp() {
         $("#task-list").append($task);
         
         $("button.delete", $task).click(function() {
-            $task.remove();
+            removeTask($task, true);
         });
         $("button.move-up", $task).click(function() {
-           $task.insertBefore($task.prev()); 
+           moveTask($task,true); 
         });
         $("button.move-down",$task).click(function() {
-           $task.insertAfter($task.next()); 
+           moveTask($task,false); 
         });
         $("span.task-name",$task).click(function() {
            onEditTaskName($(this)); 
@@ -39,6 +41,22 @@ function MyApp() {
            $(this).hide().siblings("span.task-name").show(); 
         });
     }
+    
+    function removeTask($task) {
+        $task.remove();
+        saveTaskList();
+    }
+    
+    function moveTask($task, moveUp) {
+        if(moveUp) {
+            $task.insertBefore($task.prev());
+        }
+        else {
+            $task.insertAfter($task.next());
+        }
+        saveTaskList();
+    }
+    
     function onEditTaskName($span) {
         $span.hide()
              .siblings("input.task-name")
@@ -53,7 +71,25 @@ function MyApp() {
         if($input.val()) {
             $span.text($input.val());
         }
+        saveTaskList();
         $span.show();
+    }
+    
+    function saveTaskList() {
+        var tasks=[];
+        $("#task-list .task span.task-name").each(function() {
+            tasks.push($(this).text());
+        });
+        appStorage.setValue("taskList",tasks);
+    }
+    
+    function loadTaskList() {
+        var tasks=appStorage.getValue('taskList');
+        if(tasks) {
+            for (var i in tasks) {
+                addTaskElement(tasks[i]);
+            }
+        }
     }
     
     this.start = function() {
@@ -64,9 +100,11 @@ function MyApp() {
             }
         });
         $("#app>header").append(version);
+        loadTaskList();
         setStatus("ready");
     };
 }
+
 $(function() {
     window.app = new MyApp();
     window.app.start();
