@@ -1,7 +1,7 @@
 "use strict";
 
 function MyApp() {
-    var version="v1.3",
+    var version="v2.1",
         appStorage=new AppStorage("taskAtHand");
     
     function setStatus(message) {
