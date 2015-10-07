@@ -19,6 +19,9 @@ function MyApp() {
     
     function addTaskElement(taskName) {
         var $task = $("#task-template .task").clone();
+        $task.click(function() {
+           onSelectTask($task); 
+        });
         $("span.task-name", $task).text(taskName);
         
         $("#task-list").append($task);
@@ -40,6 +43,13 @@ function MyApp() {
         }).blur(function() {
            $(this).hide().siblings("span.task-name").show(); 
         });
+    }
+    
+    function onSelectTask($task) {
+        if($task) {
+            $task.siblings(".selected").removeClass("selected");
+            $task.addClass("selected");
+        }
     }
     
     function removeTask($task) {
