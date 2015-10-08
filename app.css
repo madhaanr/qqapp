@@ -16,6 +16,12 @@ button {
     display: none;
 }
 #app {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:auto;
     margin: 4px;
     background-color: #bbc;
     background: -webkit-linear-gradient(top, #bbc,#558);
@@ -31,6 +37,8 @@ button {
 }
 
 #app>footer {
+    position:absolute;
+    bottom:0;
     padding: 0.25em;
     color: whitesmoke;
     background-color: #006;
@@ -107,4 +115,11 @@ button {
 #task-list .task:hover .tools,
 #task-list .task.selected .tools {
     opacity: 1;
+}
+
+#toolbar {
+    padding: 0.25em;
+    font-size: 0.8em;
+    color: WhiteSmoke;
+    background-color: rgba(0,0,0,0.4);
 }

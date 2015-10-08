@@ -3,6 +3,7 @@
     <head>
         <title>App</title>
         <link href="app.css" rel="stylesheet">
+        <link id="theme-style" href="themes/blue.css" rel="stylesheet" />
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="app.js"></script>
         <script src="appStorage.js"></script>
@@ -12,11 +13,20 @@
     <body>
         <div id="app">
             <header>Task@Hand</header>
+            <div id="toolbar">
+                <label for="theme">Theme</label>
+                <select id="theme" title="Select theme">
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="red">Red</option>
+                </select>
+            </div>
             <div id="main">
                 <div id="add-task">
-                <label for="new-task-name">Add a task</label>
-                <input type="text" id="new-task-name" 
-                       title="Enter a task name" placeholder="Enter a task name"/>
+                    <label for="new-task-name">Add a task</label>
+                    <input type="text" id="new-task-name" 
+                           title="Enter a task name" placeholder="Enter a task name"/>
                 </div>
                 <ul id="task-list"></ul>
             </div>
