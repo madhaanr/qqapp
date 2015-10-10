@@ -7,6 +7,7 @@
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="app.js"></script>
         <script src="appStorage.js"></script>
+        <script src="taskList.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -43,27 +44,28 @@
                         <button class="move-up" title="Up">^</button>
                         <button class="move-down" title="Down">v</button>
                     </div>
-                    <div class = "details">
+                    <div class="details">
                         <label>Start date:</label>
-                        <input type="date"/><br/>
+                        <input type="date" data-field="startDate"/><br/>
                         <label>Due date:</label>
-                        <input type="date"/><br/>
+                        <input type="date" data-field="dueDate"/><br/>
                         <label>Status:</label>
-                        <select>
+                        <select data-field="status">
                             <option value="0">None</option>
                             <option value="1">Not Started</option>
                             <option value="2">Started</option>
                             <option value="3">Completed</option>
                         </select><br/>
                         <label>Priority:</label>
-                        <select>
+                        <select data-field="priority">
                             <option value="0">None</option>
                             <option value="1">Low</option>
                             <option value="2">Normal</option>
                             <option value="3">High</option>
                         </select><br/>
                         <label>%&nbsp;Complete:</label>
-                        <input type="number" min="0" max="100" step="10" value="0"/>
+                        <input type="number" data-field="pctComplete"
+                               min="0" max="100" step="10" value="0"/>
                     </div>
                 </li>
             </ul>
