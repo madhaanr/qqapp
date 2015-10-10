@@ -78,7 +78,8 @@ button {
     transition: all 0.25s ease;
 }
 
-#task-list .task .tools button {
+#task-list .task .tools button,
+#task-list .task button.toggle-details {
     margin: 0;
     padding: 0;
     border: none;
@@ -96,6 +97,12 @@ button {
 }
 #task-list .task .tools button.move-down {
     background-position: -32px 0;
+}
+#task-list .task button.toggle-details {
+    background-position: 0 -16px;
+}
+#task-list .task button.toggle-details.expanded {
+    background-position: -16px -16px
 }
 
 #task-list .task.selected {
@@ -125,7 +132,7 @@ button {
 }
 
 #task-list .task .details {
-    display: block;
+    display: none;
     background-color: gray;
     color: white;
     border-radius: 4px;

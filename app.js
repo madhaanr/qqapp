@@ -1,7 +1,7 @@
 "use strict";
 
 function MyApp() {
-    var version="v3.0",
+    var version="v3.1",
         appStorage=new AppStorage("taskAtHand");
     
     function setStatus(message) {
@@ -43,6 +43,9 @@ function MyApp() {
         }).blur(function() {
            $(this).hide().siblings("span.task-name").show(); 
         });
+        $("button.toggle-details",$task).click(function() {
+        toggleDetails($task);
+    });
     }
     
     function onSelectTask($task) {
@@ -120,6 +123,11 @@ function MyApp() {
         }
     } 
     
+    function toggleDetails($task) {
+        $(".details",$task).slideToggle();
+        $("button.toggle-details",$task).toggleClass("expanded");
+    }
+    
     this.start = function() {
         $("#new-task-name").keypress(function(e) {
             if(e.which===13) {
@@ -130,6 +138,7 @@ function MyApp() {
         $("#theme").change(onChangeTheme);
         $("#app>header").append(version);
         loadTaskList();
+        loadTheme();
         setStatus("ready");
     };
 }
