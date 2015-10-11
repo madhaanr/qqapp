@@ -1,12 +1,16 @@
 "use strict";
 
 function MyApp() {
-    var version = "v3.2",
+    var version = "v3.3",
             appStorage = new AppStorage("taskAtHand"),
-            taskList = new TaskList();
+            taskList = new TaskList(),
+            timeoutId = 0;
 
-    function setStatus(message) {
-        $("#app>footer").text(message);
+    function setStatus(message, noFade) {
+        $("#app>footer").text(message).show();
+        if (!noFade) {
+            $("#app>footer").fadeOut(1000);
+        }
     }
 
     function addTask() {
@@ -49,10 +53,10 @@ function MyApp() {
         }).blur(function () {
             $(this).hide().siblings("span.task-name").show();
         });
-        $(".details input, .details select",$task).change((function() {
-            onChangeTaskDetails(task.id,$(this));
+        $(".details input, .details select", $task).change((function () {
+            onChangeTaskDetails(task.id, $(this));
         }))
-        
+
         $("button.toggle-details", $task).click(function () {
             $task.click(function () {
                 onSelectTask($task);
@@ -60,12 +64,12 @@ function MyApp() {
             toggleDetails($task);
         });
     }
-    
+
     function onChangeTaskDetails(taskId, $input) {
         var task = taskList.getTask(taskId);
-        if(task) {
-            var fieldName=$input.data("field");
-            task[fieldName]=$input.val();
+        if (task) {
+            var fieldName = $input.data("field");
+            task[fieldName] = $input.val();
             saveTaskList();
         }
     }
@@ -111,7 +115,14 @@ function MyApp() {
     }
 
     function saveTaskList() {
-        appStorage.setValue("taskList",taskList.getTasks());
+        if (timeoutId)
+            clearTimeout(timeoutId);
+        setStatus("saving changes...", true);
+        timeoutId = setTimeout(function () {
+            appStorage.setValue("taskList", taskList.getTasks());
+            timeoutId=0;
+            setStatus("changes saved.");
+        },2000);
     }
 
     function loadTaskList() {
@@ -119,11 +130,11 @@ function MyApp() {
         taskList = new TaskList(tasks);
         rebuildTaskList();
     }
-    
+
     function rebuildTaskList() {
         $("#task-list").empty();
-        taskList.each(function(task) {
-           addTaskElement(task); 
+        taskList.each(function (task) {
+            addTaskElement(task);
         });
     }
 
